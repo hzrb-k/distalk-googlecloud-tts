@@ -90,7 +90,7 @@ async def bye(ctx):
 @client.event
 async def on_message(message):
     if message.guild.voice_client:
-#        if message.channel.id == tch_id:
+        if message.channel.id == 949485837161209867:
             if not message.author.bot:
                 if not message.content.startswith(prefix):
                     text = message.content
