@@ -45,26 +45,11 @@ with open('/tmp/credentials.json', 'w') as file:
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/tmp/credentials.json'
 tts_client = texttospeech.TextToSpeechClient()
 
-@client.event
-async def on_ready():
-    presence = f'{prefix}ヘルプ'
-    await client.change_presence(activity=discord.Game(name=presence))
-
-@client.event
-async def on_guild_join(guild):
-    presence = f'{prefix}ヘルプ'
-    await client.change_presence(activity=discord.Game(name=presence))
-
-@client.event
-async def on_guild_remove(guild):
-    presence = f'{prefix}ヘルプ'
-    await client.change_presence(activity=discord.Game(name=presence))
-
 @client.command()
 async def join(ctx):
     if ctx.message.guild:
         if ctx.author.voice is None:
-            await ctx.send('ボイスチャンネルに接続してから呼び出してください。')
+            await ctx.send('ボイスチャンネルに接続してから呼び出してください')
         else:
             if ctx.guild.voice_client:
                 if ctx.author.voice.channel == ctx.guild.voice_client.channel:
@@ -80,7 +65,7 @@ async def join(ctx):
 async def bye(ctx):
     if ctx.message.guild:
         if ctx.voice_client is None:
-            await ctx.send('ボイスチャンネルに接続していません。')
+            await ctx.send('ボイスチャンネルに接続していません')
         else:
             filename = f'/tmp/{str(ctx.message.guild.id)}_{str(ctx.message.guild.voice_client.channel.id)}.mp3'
             if os.path.isfile(filename):
@@ -164,8 +149,7 @@ async def on_message(message):
 async def on_voice_state_update(member, before, after):
     if before.channel is None:
         if member.id == client.user.id:
-            presence = f'{prefix}ヘルプ'
-            await client.change_presence(activity=discord.Game(name=presence))
+            pass
         else:
             if member.guild.voice_client is None:
                 await asyncio.sleep(0.5)
@@ -181,8 +165,7 @@ async def on_voice_state_update(member, before, after):
                     member.guild.voice_client.play(source)
     elif after.channel is None:
         if member.id == client.user.id:
-            presence = f'{prefix}ヘルプ'
-            await client.change_presence(activity=discord.Game(name=presence))
+            pass
         else:
             if member.guild.voice_client:
                 if member.guild.voice_client.channel is before.channel:
