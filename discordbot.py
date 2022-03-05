@@ -94,7 +94,7 @@ async def on_message(message):
                 text = message.content
 
                 # Add author's name
-                text = message.author.name + '、' + text
+#                text = message.author.name + '、' + text
 
                 # Replace new line
                 text = text.replace('\n', '、')
